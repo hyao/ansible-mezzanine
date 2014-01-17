@@ -1,10 +1,7 @@
 --- 
 
-#- name: update apt cache and upgrade
-#  apt: update_cache=yes upgrade=dist
-
-- name: apt-get clean
-  command: apt-get clean
+- name: update apt cache and upgrade
+  apt: update_cache=yes #upgrade=dist
 
 - name: install packages 
   apt: pkg={{ item }} state=latest
@@ -22,8 +19,9 @@
   notify:
     - start apache2
     - start postgresql
-  tags:
-    - packages
+
+- name: apt-get clean
+  command: apt-get clean
 
 - name: copy pg_hba.conf to vm
   copy: src=pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf

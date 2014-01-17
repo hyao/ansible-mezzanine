@@ -1,17 +1,6 @@
 ---
 
 - include: packages.yml
-
-- name: create db
-  postgresql_db: name={{ mz_db_name }} encoding='UTF-8' template='template0'
-  sudo: true
-  sudo_user: postgres
-
-- name: create db user
-  postgresql_user: db={{ mz_db_name }} name={{ mz_db_user }} 
-                   password={{ mz_db_password }} priv=ALL
-  sudo: true
-  sudo_user: postgres
-
+- include: postgresql.yml
 - include: virtualenv.yml
 - include: mezzanine_config.yml

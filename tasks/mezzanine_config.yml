@@ -6,9 +6,9 @@
 - name: mkdir project path {{ mz_project_path }}
   command: mkdir -p {{ mz_project_path }}
 
-#- name: create mezzanine project {{ mz_project_path }} / {{ mz_project_name }}
-#  command: chdir={{ mz_project_path }}
-#           {{ mz_venv }}/bin/vexec mezzanine-project {{ mz_project_name }}
+- name: create mezzanine project {{ mz_project_path }} / {{ mz_project_name }}
+  command: chdir={{ mz_project_path }}
+           {{ mz_venv }}/bin/vexec mezzanine-project {{ mz_project_name }}
 
 - name: backup local_settings.py
   command: chdir={{ mz_project_path }}/{{ mz_project_name }}
@@ -29,9 +29,9 @@
          cat mz_settings.py tp-keys > local_settings.py &&
          rm mz_settings.py tp-keys
 
-#- name: python manage.py createdb 
-#  command: chdir={{ mz_project_path }}/{{ mz_project_name }}
-#           {{ mz_venv }}/bin/vexec python manage.py createdb --noinput
+- name: python manage.py createdb 
+  command: chdir={{ mz_project_path }}/{{ mz_project_name }}
+           {{ mz_venv }}/bin/vexec python manage.py createdb --noinput
 
 - name: python manage.py collectstatic
   command: chdir={{ mz_project_path }}/{{ mz_project_name }}
