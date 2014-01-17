@@ -1,0 +1,16 @@
+---
+# set up virtualenv for mezzanine and install related packages
+
+#- name: rm -rf old virtualenv {{ mz_venv }}
+#  command: rm -rf {{ mz_venv }}
+
+#- name: create virtualenv {{ mz_ve_path }}
+#  command: virtualenv {{ mz_venv }}
+
+- name: install mezzanine, south, images
+  pip: name={{ item }} virtualenv={{ mz_venv }}
+  with_items:
+    - mezzanine
+    - south
+    - image
+    - psycopg2

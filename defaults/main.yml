@@ -1,0 +1,15 @@
+mz_site_url: cms.example.com
+mz_site_alias: www.cms.example.com
+
+mz_db_name: mezzanine
+mz_db_user: mezzanine
+mz_db_password: your_password 
+
+#virtualenv path for mezzanine
+mz_venv: /home/ubuntu/ve/mezzanine
+mz_project_path: /home/ubuntu/projects
+mz_project_name: cms
+
+#apache config
+mz_apache_ip: '*'
+mz_apache_port: 80

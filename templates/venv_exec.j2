@@ -1,0 +1,6 @@
+#!/bin/bash
+#based on:
+#http://stackoverflow.com/questions/20040141/ansible-command-from-inside-virtualenv
+
+source {{ mz_venv }}/bin/activate
+$@
