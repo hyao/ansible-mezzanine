@@ -1,15 +1,18 @@
 ---
 
-- name: cp venv wrapper to vm
-  template: src=venv_exec.j2 dest={{ mz_venv }}/bin/vexec mode=0755
+- name: copy venv wrapper to run command in virtualenv to vm
+  template: src=venv_exec.j2 dest={{ mz_venv }}/bin/pyenv mode=0755
 
+#create mezzanine project
 - name: mkdir project path {{ mz_project_path }}
   command: mkdir -p {{ mz_project_path }}
 
-- name: create mezzanine project {{ mz_project_path }} / {{ mz_project_name }}
+- name: create mezzanine project {{ mz_project_path }}/{{ mz_project_name }}
   command: chdir={{ mz_project_path }}
-           {{ mz_venv }}/bin/vexec mezzanine-project {{ mz_project_name }}
+           {{ mz_venv }}/bin/pyenv 
+           mezzanine-project {{ mz_project_name }}
 
+#set up local_settings.py
 - name: backup local_settings.py
   command: chdir={{ mz_project_path }}/{{ mz_project_name }}
            creates=local_settings.py.orig
@@ -29,19 +32,14 @@
          cat mz_settings.py tp-keys > local_settings.py &&
          rm mz_settings.py tp-keys
 
+#mezzanine project initialization
 - name: python manage.py createdb 
   command: chdir={{ mz_project_path }}/{{ mz_project_name }}
-           {{ mz_venv }}/bin/vexec python manage.py createdb --noinput
+           {{ mz_venv }}/bin/pyenv
+           python manage.py createdb --noinput
 
 - name: python manage.py collectstatic
   command: chdir={{ mz_project_path }}/{{ mz_project_name }}
-           {{ mz_venv }}/bin/vexec python manage.py collectstatic --noinput
+           {{ mz_venv }}/bin/pyenv
+           python manage.py collectstatic --noinput
 
-- name: cp vhost.conf to vm and restart apache
-  template: src=vhost.conf dest=/etc/apache2/sites-available/{{ mz_site_url }}
-            owner=root group=root mode=0644
-
-- name: a2ensite {{ mz_site_url }}
-  command: a2ensite {{ mz_site_url }}
-  notify:
-    - restart apache2

@@ -1,0 +1,16 @@
+---
+
+#restore postgres db data
+
+#assumes backup using pg_dump -Fc mezzanine_db > cms_db.data 
+#cms_db.data is in the files dir
+
+- name: copy db data to vm
+  copy: src=cms_db.data dest=/tmp/cms_db.data mode=0644
+
+- name: restore postgres db data 
+  command: pg_restore -c -d {{ mz_db_name }} /tmp/cms_db.data
+  sudo_user: postgres
+
+- name: rm db data on vm
+  command: rm /tmp/cms_db.data

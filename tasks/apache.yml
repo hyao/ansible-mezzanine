@@ -1,0 +1,15 @@
+#apache2 config
+- name: enable utf-8 encoding for apache2
+  lineinfile: dest=/etc/apache2/envvars
+              line=". /etc/default/locale"
+              insertbefore="^export LANG"
+              backup=yes
+
+- name: cp vhost.conf to vm and restart apache
+  template: src=vhost.conf dest=/etc/apache2/sites-available/{{ mz_site_url }}
+            owner=root group=root mode=0644
+
+- name: a2ensite {{ mz_site_url }}
+  command: a2ensite {{ mz_site_url }}
+  notify:
+    - restart apache2

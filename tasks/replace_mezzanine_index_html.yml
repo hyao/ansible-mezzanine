@@ -1,0 +1,8 @@
+---
+#replace mezzanine index.html
+#it's in files/mz_index.html
+
+- name: copy mz_index.html to vm
+  copy: src=mz_index.html dest={{ mz_venv }}/lib/python2.7/site-packages/mezzanine/core/templates/index.html mode=0644
+  notify:
+    - restart apache2

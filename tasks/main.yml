@@ -4,3 +4,9 @@
 - include: postgresql.yml
 - include: virtualenv.yml
 - include: mezzanine_config.yml
+- include: apache.yml
+
+
+#customizations: run as needed
+#- include: restore_db.yml
+#- include: replace_mezzanine_index_html.yml
