@@ -6,25 +6,27 @@
 - name: install packages 
   apt: pkg={{ item }} state=latest
   with_items:
-    - apache2
-    - libapache2-mod-wsgi
-    - postgresql-9.1
-    - postgresql-client-9.1
+    - nginx
+    - uwsgi
+    - uwsgi-extra
+    - uwsgi-plugin-python
+    - postgresql
+    - postgresql-client
     #for ansible postgresql modules and building psycopg2 in virtualenv
     - python2.7-dev
-    - postgresql-server-dev-9.1 
+    - postgresql-server-dev-9.3 
     - python-psycopg2
     - python-virtualenv
     - python-pip
   notify:
-    - start apache2
+    - start nginx 
     - start postgresql
 
 - name: apt-get clean
   command: apt-get clean
 
 - name: copy pg_hba.conf to vm
-  copy: src=pg_hba.conf dest=/etc/postgresql/9.1/main/pg_hba.conf
+  copy: src=pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf
         owner=postgres group=postgres mode=0640
 
 - name: restart postgresql
